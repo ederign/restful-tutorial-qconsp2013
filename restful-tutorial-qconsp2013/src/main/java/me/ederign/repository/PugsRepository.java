@@ -18,10 +18,28 @@ public class PugsRepository {
     }
 
     public static Pug findById( String id ) {
-        for(Pug pug: pugs.getPugs()){
-            if(pug.getId().equals(id))
+        for ( Pug pug : pugs.getPugs() ) {
+            if ( pug.getId().equals( id ) ) {
                 return pug;
+            }
         }
         return null;
+    }
+
+    public static Pug createOrUpdate( Pug pug ) {
+        if ( pug.getId() == null ) {
+            pug.generateId();
+        }
+        pugs.add( pug );
+        return pug;
+    }
+
+    public static void delete( Integer id ) {
+        for ( int i=0;i<pugs.getPugs().size();i++ ){
+            Pug pug = pugs.getPugs().get( i );
+            if ( pug.getId().equals( id.toString() ) ) {
+                pugs.getPugs().remove( i );
+            }
+        }
     }
 }

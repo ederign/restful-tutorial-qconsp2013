@@ -1,6 +1,7 @@
 package me.ederign.domain;
 
 import java.awt.font.ShapeGraphicAttribute;
+import java.util.Random;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -8,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Pug {
 
     @XmlElement
-    private Integer id;
+    private Integer id ;
 
     @XmlElement
     private String name;
@@ -29,5 +30,41 @@ public class Pug {
 
     public String getId() {
         return id.toString();
+    }
+
+    public void generateId() {
+        id = new Random(  ).nextInt();
+    }
+
+    @Override
+    public boolean equals( Object o ) {
+        if ( this == o ) {
+            return true;
+        }
+        if ( !( o instanceof Pug ) ) {
+            return false;
+        }
+
+        Pug pug = (Pug) o;
+
+        if ( id != null ? !id.equals( pug.id ) : pug.id != null ) {
+            return false;
+        }
+        if ( name != null ? !name.equals( pug.name ) : pug.name != null ) {
+            return false;
+        }
+        if ( peso != null ? !peso.equals( pug.peso ) : pug.peso != null ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + ( name != null ? name.hashCode() : 0 );
+        result = 31 * result + ( peso != null ? peso.hashCode() : 0 );
+        return result;
     }
 }

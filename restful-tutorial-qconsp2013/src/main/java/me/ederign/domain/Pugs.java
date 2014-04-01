@@ -9,17 +9,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Pugs {
 
     @XmlElement(name = "pug")
-    private List<Pug> pugs = new ArrayList<Pug>();
+    private List<Pug> pugs = new ArrayList<>();
+
+    public Pugs() {
+
+    }
 
     public List<Pug> getPugs() {
         return pugs;
     }
 
-    public void add(Pug pug) {
-        pugs.add(pug);
+    public void add( Pug pug ) {
+        pugs.add( pug );
     }
 
-    public Integer numberOfPugs(){
+    public Integer numberOfPugs() {
         return pugs.size();
     }
 

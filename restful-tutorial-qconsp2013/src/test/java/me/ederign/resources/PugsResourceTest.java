@@ -2,6 +2,7 @@ package me.ederign.resources;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -14,8 +15,8 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
+import static org.junit.Assert.*;
 
 public class PugsResourceTest {
 
@@ -57,6 +58,23 @@ public class PugsResourceTest {
     public void testGetPugById() {
         Pug actual = target.path( "pugs/1" ).request().get( Pug.class );
         assertEquals( "1", actual.getId() );
+    }
+
+    @Test
+    public void createPugByPut() {
+        Pug pug = new Pug( 1,"Dorinha", 10 );
+        Pug pugs = target.path( "pugs/1" ).request().put( Entity.json( pug ), Pug.class );
+    }
+
+    @Test
+    public void deletePug() {
+        Pug pug = new Pug( 1,"Dorinha", 10 );
+        Response get = target.path( "pugs/1" ).request().get( );
+        assertEquals(200, get.getStatus() );
+        Response delete = target.path( "pugs/1" ).request().delete();
+        assertEquals(200, delete.getStatus() );
+        get = target.path( "pugs/1" ).request().get( );
+        assertEquals(404, get.getStatus() );
     }
 
 }

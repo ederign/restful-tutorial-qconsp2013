@@ -1,13 +1,13 @@
 package me.ederign.infra;
 
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.jackson.JacksonFeature;
-import org.glassfish.jersey.server.ResourceConfig;
-
 import java.io.IOException;
 import java.net.URI;
 
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.moxy.json.MoxyJsonFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 
 public class Main {
 
@@ -22,7 +22,7 @@ public class Main {
         DataStore.createSampleData();
 
         final ResourceConfig rc = new ResourceConfig().packages("me.ederign.resources" );
-        rc.register( JacksonFeature.class );
+        rc.register(MoxyJsonFeature.class);
         HttpServer httpServer = GrizzlyHttpServerFactory.createHttpServer( URI.create( BASE_URI ), rc );
         return httpServer;
     }
@@ -39,5 +39,6 @@ public class Main {
         System.in.read();
         server.stop();
     }
+
 }
 
