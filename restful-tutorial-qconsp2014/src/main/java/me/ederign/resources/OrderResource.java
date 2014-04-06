@@ -19,6 +19,6 @@ public class OrderResource {
     @Produces({ MediaType.APPLICATION_JSON })
     public Response getOrder( @PathParam("id") String id ) throws URISyntaxException {
         Order order = new Order( "1", "Eder Ignatowicz" );
-        return Response.ok( order ).link("/ship/1", "ship" ).build();
+        return Response.ok( order ).link("/ship/1", "ship" ).link("/another/1", "anotherLink" ).build();
     }
 }

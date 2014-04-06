@@ -67,13 +67,13 @@ public class PugsResourceTest {
 
     @Test
     public void createPugByPut() throws URISyntaxException {
-        Pug pug = new Pug( 1, "Dorinha", 10, new URI( "http://api.puglovers.com/pugs/1" ) );
+        Pug pug = new Pug( 1, "Dorinha", 10, new URI( "http://api.puglovers.com/pugs/1" ), new URI( "http://api.puglovers.com/pics/1" ) );
         Pug pugs = target.path( "pugs/1" ).request().put( Entity.json( pug ), Pug.class );
     }
 
     @Test
     public void deletePug() throws URISyntaxException {
-        Pug pug = new Pug( 1, "Dorinha", 10, new URI( "http://api.puglovers.com/pugs/1" ) );
+        Pug pug = new Pug( 1, "Dorinha", 10, new URI( "http://api.puglovers.com/pugs/1" ), new URI( "http://api.puglovers.com/pics/1" ) );
         Response get = target.path( "pugs/1" ).request().get();
         assertEquals( 200, get.getStatus() );
         Response delete = target.path( "pugs/1" ).request().delete();
@@ -98,7 +98,7 @@ public class PugsResourceTest {
 
     @Test
     public void conditionalPut() throws URISyntaxException {
-        Pug originalPug = new Pug( 1, "Dorinha", 10, new URI( "http://api.puglovers.com/pugs/1" ) );
+        Pug originalPug = new Pug( 1, "Dorinha", 10, new URI( "http://api.puglovers.com/pugs/1" ), new URI( "http://api.puglovers.com/pics/1" ) );
         Response responsePut = target.path( "pugs/1" ).request().put( Entity.json( originalPug ) );
         assertEquals( 201, responsePut.getStatus() );
 
@@ -107,7 +107,7 @@ public class PugsResourceTest {
         assertEquals( 200, response200.getStatus() );
 
         //another concurrent request with right tag
-        Pug concurrentPug = new Pug( 1, "Slim Dorinha", 11, new URI( "http://api.puglovers.com/pugs/1" ) );
+        Pug concurrentPug = new Pug( 1, "Slim Dorinha", 11, new URI( "http://api.puglovers.com/pugs/1" ), new URI( "http://api.puglovers.com/pic/1" ) );
         Response responsePutSlim = target.path( "pugs/1" ).request().header( "If-Match", originalTag ).put( Entity.json( concurrentPug ) );
         assertEquals( 201, responsePutSlim.getStatus() );
 
@@ -119,7 +119,16 @@ public class PugsResourceTest {
         //Only perform the action if the client supplied entity matches the same entity on server
         originalPug.setPeso( 1 );
         Response response412 = target.path( "pugs/1" ).request().header( "If-Match", originalTag ).put( Entity.json( originalPug ) );
-        assertEquals( 412 ,response412.getStatus() );
+        assertEquals( 412, response412.getStatus() );
+    }
+
+    @Test
+    public void hateoasPics() throws URISyntaxException {
+        Pugs allPugs = target.path( "pugs" ).request().get( Pugs.class );
+        for ( Pug pug : allPugs.getPugs() ) {
+            URI pic = pug.getPic();
+            //request and download each pic
+        }
     }
 
 }

@@ -17,6 +17,9 @@ public class Pug {
     private String name;
 
     @XmlElement
+    private URI pic;
+
+    @XmlElement
     private Integer peso;
 
     @XmlElement
@@ -28,10 +31,11 @@ public class Pug {
     public Pug( Integer id,
                 String name,
                 Integer peso,
-                URI href ) {
+                URI href, URI pic ) {
         this.id = id;
         this.name = name;
         this.peso = peso;
+        this.pic = pic;
         this.meta = new Meta( href, MediaType.APPLICATION_JSON );
     }
 
@@ -81,5 +85,9 @@ public class Pug {
 
     public void setId( Integer id ) {
         this.id = id;
+    }
+
+    public URI getPic() {
+        return pic;
     }
 }
