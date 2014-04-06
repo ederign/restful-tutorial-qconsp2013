@@ -1,5 +1,8 @@
 package me.ederign.infra;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import me.ederign.domain.Pug;
 import me.ederign.domain.Pugs;
 import me.ederign.repository.PugsRepository;
@@ -10,8 +13,13 @@ public class DataStore {
 
         Pugs pugs = new Pugs();
 
-        pugs.add( new Pug(1, "Dorinha", 10 ) );
-        pugs.add( new Pug(2, "Bentao", 12 ) );
+        try {
+            pugs.add( new Pug(1, "Dorinha", 10, new URI( "http://api.puglovers.com/pugs/1" ) ) );
+            pugs.add( new Pug(2, "Bentao", 12, new URI( "http://api.puglovers.com/pugs/2" ) ) );
+        } catch ( URISyntaxException e ) {
+            e.printStackTrace();
+        }
+
 
         PugsRepository.setup( pugs );
     }

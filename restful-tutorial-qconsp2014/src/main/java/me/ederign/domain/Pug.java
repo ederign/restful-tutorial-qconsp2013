@@ -1,7 +1,9 @@
 package me.ederign.domain;
 
 import java.awt.font.ShapeGraphicAttribute;
+import java.net.URI;
 import java.util.Random;
+import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -9,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Pug {
 
     @XmlElement
-    private Integer id ;
+    private Integer id;
 
     @XmlElement
     private String name;
@@ -17,15 +19,20 @@ public class Pug {
     @XmlElement
     private Integer peso;
 
+    @XmlElement
+    private Meta meta;
+
     public Pug() {
     }
 
     public Pug( Integer id,
                 String name,
-                Integer peso ) {
-        this.id=id;
+                Integer peso,
+                URI href ) {
+        this.id = id;
         this.name = name;
         this.peso = peso;
+        this.meta = new Meta( href, MediaType.APPLICATION_JSON );
     }
 
     public String getId() {
@@ -33,7 +40,7 @@ public class Pug {
     }
 
     public void generateId() {
-        id = new Random(  ).nextInt();
+        id = new Random().nextInt();
     }
 
     @Override
@@ -66,5 +73,13 @@ public class Pug {
         result = 31 * result + ( name != null ? name.hashCode() : 0 );
         result = 31 * result + ( peso != null ? peso.hashCode() : 0 );
         return result;
+    }
+
+    public void setPeso( int peso ) {
+        this.peso = peso;
+    }
+
+    public void setId( Integer id ) {
+        this.id = id;
     }
 }

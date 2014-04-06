@@ -23,6 +23,11 @@ public class Pugs {
         pugs.add( pug );
     }
 
+    public void add( int position,
+                     Pug pug ) {
+        pugs.add( position, pug );
+    }
+
     public Integer numberOfPugs() {
         return pugs.size();
     }
