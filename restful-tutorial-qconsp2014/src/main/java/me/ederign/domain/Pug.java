@@ -20,6 +20,12 @@ public class Pug {
     private URI pic;
 
     @XmlElement
+    private URI father;
+
+    @XmlElement
+    private URI mother;
+
+    @XmlElement
     private Integer peso;
 
     @XmlElement
@@ -36,6 +42,21 @@ public class Pug {
         this.name = name;
         this.peso = peso;
         this.pic = pic;
+        this.meta = new Meta( href, MediaType.APPLICATION_JSON );
+    }
+    public Pug( Integer id,
+                String name,
+                Integer peso,
+                URI href,
+                URI pic,
+                URI father,
+                URI mother ) {
+        this.id = id;
+        this.name = name;
+        this.peso = peso;
+        this.pic = pic;
+        this.mother = mother;
+        this.father = father;
         this.meta = new Meta( href, MediaType.APPLICATION_JSON );
     }
 
@@ -89,5 +110,13 @@ public class Pug {
 
     public URI getPic() {
         return pic;
+    }
+
+    public URI getFather() {
+        return father;
+    }
+
+    public String getName() {
+        return name;
     }
 }

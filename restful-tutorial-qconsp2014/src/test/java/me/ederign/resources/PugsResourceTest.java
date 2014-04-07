@@ -131,4 +131,11 @@ public class PugsResourceTest {
         }
     }
 
+    @Test
+    public void hateoasPugs() throws URISyntaxException {
+        Pug dora = target.path( "pugs/1" ).request().get( Pug.class );
+        Pug bentao = target.path( dora.getFather().getPath() ).request().get( Pug.class );
+        assertEquals( "Bentao", bentao.getName() );
+    }
+
 }
